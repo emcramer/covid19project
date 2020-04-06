@@ -7,9 +7,8 @@
 #    http://shiny.rstudio.com/
 #
 
-libs <- c("shiny", "shinythemes", "tidyverse", 
-          "dplyr", "ggplot2", "lubridate", 
-          "knitr", "glue", "plotly")
+libs <- c("shiny", "shinythemes", "tidyverse", "dplyr", "ggplot2", "lubridate", 
+          "knitr", "glue", "plotly", "cowplot")
 easypackages::libraries(libs)
 
 # handy functions
