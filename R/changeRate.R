@@ -51,9 +51,10 @@ countyPlotter <- function(df, measuresDate = NA){
     theme_bw()
   p2 <- ggplot(data=df) +
     geom_line(aes(x=Date, y=changeRatio, color='red'), size=1.3) + 
+    scale_y_continuous(trans='log10') +
     geom_smooth(aes(x=Date, y=changeRatio), method='loess') + 
     scale_color_manual(name = 'Change Ratio', values = 'red', labels = cname) +
-    labs(y="")
+    labs(y=expression(Log[10](CR)))
   if (!is.na(measuresDate)) {
     p2 <- p2 + 
       geom_vline(aes(xintercept = measuresDate

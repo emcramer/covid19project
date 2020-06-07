@@ -203,9 +203,10 @@ server <- function(input, output, session) {
                 theme_bw()
             p2 <- ggplot(data=df) +
                 geom_line(aes(x=Date, y=changeRatio, color='red'), size=1.3) + 
+                scale_y_continuous(trans = 'log10') + 
                 geom_smooth(aes(x=Date, y=changeRatio), method='loess') + 
-                scale_color_manual(name = 'Change Ratio', values = 'red', labels = cname) +
-                labs(y="")
+                scale_color_manual(name = 'Change Ratio (CR)', values = 'red', labels = cname) +
+                labs(y=expression(Log[10](CR)))
             if (!is.na(measuresDate)) {
                 p2 <- p2 + 
                     geom_vline(aes(xintercept = measuresDate
