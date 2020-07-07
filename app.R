@@ -7,9 +7,19 @@
 #    http://shiny.rstudio.com/
 #
 
-libs <- c("shiny", "shinythemes", "tidyverse", "dplyr", "ggplot2", "lubridate", 
-          "knitr", "glue", "plotly", "cowplot")
-easypackages::libraries(libs)
+# libs <- c("shiny", "shinythemes", "tidyverse", "dplyr", "ggplot2", "lubridate", 
+#           "knitr", "glue", "plotly", "cowplot")
+# easypackages::libraries(libs)
+
+# library(shiny)
+library(shinythemes)
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(glue)
+library(plotly)
+library(cowplot)
+library(readr)
 
 # handy functions
 capitalize <- function(x) {
@@ -19,11 +29,26 @@ capitalize <- function(x) {
 }
 
 # load the data
-covidData <- read.csv("https://static.usafacts.org/public/data/covid-19/covid_confirmed_usafacts.csv")
+covidData <- read_file(
+    "https://static.usafacts.org/public/data/covid-19/covid_confirmed_usafacts.csv"
+    ) %>%
+    iconv("ASCII", "UTF-8") %>%
+    read.table(text = ., sep = ",", header = TRUE, stringsAsFactors = FALSE)
+# covidData <- read.csv(
+#     "https://static.usafacts.org/public/data/covid-19/covid_confirmed_usafacts.csv"
+#     , header = FALSE
+# )
+# cnames <- as.character(covidData[1, ])
+# Encoding(cnames) <- "UTF-8"
+# colnames(covidData) <- gsub("[^[:alnum:]|/]", "", cnames)
+# covidData <- covidData[-1, ] %>%
+#     as_tibble() %>%
+#     mutate_at(vars(-c("countyFIPS", "CountyName", "State")), as.numeric)
 
 # preprocess the data
 # add local ordinance data
-countyMeasuresData <- read.csv(here::here("data/countyMeasures.csv"))
+countyMeasuresData <- read.csv(
+    "./data/countyMeasures.csv")
 countyMeasuresData$Local.Measures.Date <- ymd(countyMeasuresData$Local.Measures.Date)
 
 # add when local measures were taken
