@@ -63,9 +63,14 @@ countyDateData <- pivot_longer(covidData
                                , cols = starts_with("X")
                                , names_to = "Date"
                                , values_to = "Count")
-countyDateData$Date <- gsub("X", "", countyDateData$Date) %>%
-    gsub("\\.", "-", .) %>%
-    mdy()
+countyDateData$Date <- gsub("\\."
+                            , "-"
+                            , gsub("X"
+                                   , ""
+                                   , countyDateData$Date
+                            )
+) %>% 
+  ymd()
 
 # calculate the number of new cases each day and change ratio
 calcNewCases <- function(x) {
